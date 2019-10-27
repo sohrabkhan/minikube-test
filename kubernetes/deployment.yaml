@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  minikube-deployment
+  labels:
+    app:  minikube-app
+  namespace: minikube
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  minikube-app
+    spec:
+      containers:
+      - image:  sohrabkhan/helloflask
+        name:  helloflask
+        ports:
+        - containerPort:  80
+          name:  httpport
